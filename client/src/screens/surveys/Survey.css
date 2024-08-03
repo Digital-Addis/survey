@@ -1,0 +1,33 @@
+.editButton {
+    border: none;
+    font-size:21px;
+    color: rgba(52, 152, 219, 0.87);
+    transition: 300ms all;
+    /* margin-bottom: 3px; */
+    margin-right: 3px;
+  }
+  .editButton:hover {
+    cursor: pointer;
+    scale: 1.02;
+    color: rgba(52, 152, 219, 1);
+  }
+  .deleteButton {
+    border: none;
+    font-size: 21px;
+    color: rgba(255, 0, 0, 0.57);
+    transition: 300ms all;
+  }
+  .deleteButton:hover {
+    cursor: pointer;
+    scale: 1.02;
+    color: rgba(255, 0, 0,1);
+  }
+.copyButton{
+  padding: 6px 13px;
+  border: 1px dashed rgba(52, 152, 219, 0.87);
+  border-radius: 8px;
+  font-size: 14px;
+}
+.copyButton:hover{
+  cursor: pointer;
+}

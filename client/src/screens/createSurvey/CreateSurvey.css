@@ -1,0 +1,125 @@
+/* Reset some basic elements */
+body, h1, h2, h3, h4, h5, h6, p, ul, li, form, input, textarea, select, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  form h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  form input[type="text"],
+  form textarea,
+  form select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  form input[type="text"]::placeholder,
+  form textarea::placeholder {
+    color: #999;
+  }
+  
+  form button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px 0 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  form button:hover {
+    background-color: #0056b3;
+  }
+  
+  form .question-block {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background: #f9f9f9;
+  }
+  
+  form .question-block:last-child {
+    margin-bottom: 0;
+  }
+  
+  form .question-block h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  form .question-block select {
+    width: calc(50% - 10px);
+    margin-right: 10px;
+  }
+  
+  form .question-block input[type="text"] {
+    width: calc(50% - 10px);
+  }
+  
+  form .add-question-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0 10px;
+    border: 1px dashed #007bff;
+    border-radius: 5px;
+    background: none;
+    color: #007bff;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  form .add-question-button:hover {
+    background-color: #e7f3ff;
+  }
+  
+  .copyButtonPopUp{
+    color: #14ac5f;
+
+  }
+  .copyButtonPopUp:hover{
+    cursor: pointer;
+  }
+
+.questionXmark{
+  font-weight: 500;
+  font-size: 18px;
+  transition: 300ms all;
+
+}
+.questionXmark:hover{
+  cursor: pointer;
+  scale: 1.02;
+  color: red;
+}

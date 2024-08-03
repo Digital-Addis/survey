@@ -1,0 +1,53 @@
+.content-wrappers {
+    background-color: var(--background-color);
+    min-height: 100vh;
+    padding: 50px 58px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* margin-left: 260px; */
+  
+    @media (max-width: 1400px) {
+      padding: 32px;
+    }
+  
+    @media (max-width: 1200px) {
+      margin-left: 56px;
+    }
+  
+    @media (max-width: 768px) {
+      margin-left: 0;
+      padding: 24px;
+    }
+  
+    @media (max-width: 576px) {
+      margin-left: 0;
+      padding: 16px;
+    }
+  }
+.surveyContent{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+form input[type="text"],
+form textarea,
+form select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+}
+form input[type="checkbox"]:hover {
+cursor: pointer;
+}
+form input[type="radio"]:hover {
+cursor: pointer;
+}
+.surveySection{
+  margin-top: 20px;
+}
