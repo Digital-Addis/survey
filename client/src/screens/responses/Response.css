@@ -1,0 +1,59 @@
+.custom-swiper .swiper-slide {
+    padding: 10px 30px 10px 30px;
+  }
+  
+  .custom-swiper .swiper-pagination {
+    position: static;
+    margin-top: 10px;
+  }
+  
+  .custom-swiper .swiper-button-prev,
+  .custom-swiper .swiper-button-next {
+    top: calc(50% - 20px);
+  }
+.sliderContainer{
+  /* background-color: orange; */
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: space-around; */
+  gap: 10px;
+  /* width: 100%; */
+}  
+
+.titleNavigation{
+    color: black;
+    margin-right: 10px;
+
+}
+
+  .titleNavigation:hover{
+    cursor: pointer;
+  }
+  .surveyList{
+    padding: 8px 10px;
+    margin: 0px 10px 0px 0px ;
+    transition: 300ms all ;
+  }
+  .surveyList:hover{
+    text-decoration: underline;
+  }
+  .active-survey {
+    text-decoration: underline;
+    padding: 8px 10px;
+    transition: 300ms all ;
+  }
+.ResponseulContainer{
+  width: 70%;
+  margin: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.3);
+  gap: 12px;
+  padding: 8px 0px;
+  filter: drop-shadow(4px 4px 4px rbga(0,0,0,0.3));
+}
+.page-wrapper-of-response {
+  background-color: var(--background-color);
+  min-height:350vh;
+  overflow: hidden;
+  
+}

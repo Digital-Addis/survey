@@ -80,11 +80,12 @@ export default function Surveys() {
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/survey/get-surveys")
-      .then((response) => {
-        const surveysWithId = response.data.map((survey) => ({
+      .then((res) => {
+        const surveysWithId = res.data.map((survey) => ({
           ...survey,
           id: survey._id,
           questionCount: survey.questions.length,
+          responses: survey.responses.length,
           url: survey.url,
         }));
         setSurveys(surveysWithId);
@@ -114,7 +115,7 @@ export default function Surveys() {
     { field: "id", headerName: "ID", width: 90 },
     { field: "title", headerName: "Title", width: 260 },
     { field: "questionCount", headerName: "Number of Questions", width: 150 },
-    { field: "response", headerName: "Number of Responses", width: 160 },
+    { field: "responses", headerName: "Number of Responses", width: 160 },
     { field: "date", headerName: "Created on", width: 120 },
     {
       field: "url",
@@ -240,10 +241,10 @@ export default function Surveys() {
                 columns={columns}
                 initialState={{
                   pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
+                    paginationModel: { page: 0, pageSize: 10 },
                   },
                 }}
-                pageSizeOptions={[5, 10, 15]}
+                pageSizeOptions={[10, 50]}
                 checkboxSelection
               />
             </div>

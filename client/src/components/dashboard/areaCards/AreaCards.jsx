@@ -5,19 +5,27 @@ import axios from "axios";
 
 const AreaCards = () => {
   const [totalSurvey, setTotalSurvey] = useState();
+  const [totalDeletedSurvey, setTotalDeletedSurvey] = useState();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/survey/deleted-survey-number")
+      .then((res) => {
+        setTotalDeletedSurvey(res.data);
+      })
+      .catch((err) => {
+        console.error(
+          "there is error fetching total number of deleted surveys",
+          err
+        );
+      });
+  }, []);
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/survey/get-total-surveys")
       .then((response) => {
         setTotalSurvey(response.data);
-
-        // const surveysWithId = response.data.map((survey) => ({
-        //   ...survey,
-        //   id: survey._id,
-        //   questionCount: survey.questions.length,
-        //   url: survey.url,
-        // }));
-        // setSurveys(surveysWithId);
       })
       .catch((error) => {
         console.error("There was an error fetching the surveys!", error);
@@ -45,11 +53,11 @@ const AreaCards = () => {
       />
       <AreaCard
         colors={["#e4e8ef", "#f29a2e"]}
-        percentFillValue={7}
+        percentFillValue={totalDeletedSurvey}
         cardInfo={{
           title: "Total Deleted Survey",
-          value: "7",
-          text: "There are 7 deleted survey",
+          value: totalDeletedSurvey,
+          text: `There are ${totalDeletedSurvey} deleted survey`,
         }}
       />
     </section>

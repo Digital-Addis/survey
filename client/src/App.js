@@ -8,6 +8,7 @@ import { Dashboard, PageNotFound } from "./screens";
 import Form from "./components/Form"
 import CreateSurvey from "./screens/createSurvey/CreateSurvey";
 import UpdateSurvey from "./screens/updateSurvey/UpdateSurvey";
+import Response from "./screens/responses/Response";
 import Trash from './screens/deletedSurveys/Trash'
 import ShowSurvey from "./screens/showSurvey/ShowSurvey";
 import Surveys from "./screens/surveys/Surveys";
@@ -52,6 +53,11 @@ element:<WelcomEmail></WelcomEmail>
   {
     path:"/dashboard-trash",
     element:<Trash></Trash>
+  },
+  {
+    path:"/dashbboard-responses",
+    element:<Response></Response>
+
   },
   {
     path:'/survey/:uniqueId',

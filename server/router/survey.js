@@ -29,8 +29,10 @@ surveyRoute.route("/delete-survey/:id").delete(surveyController.deleteSurvey)
 surveyRoute.route("/deleted-collection-survey").post(surveyController.registerDeletedSurvey)
 // surveyRoute.route("/deleted-surveys").get(surveyController.getDeletedSurvey)
 surveyRoute.route("/deleted-surveys").get(surveyController.getDeletedSurvey)
-
+surveyRoute.route("/deleted-survey-number").get(surveyController.getDeletedSurveysNumber)
   // export default surveyRoute;
+
+surveyRoute.route("/submit/:uniqueId").post(surveyController.submitSurvey)  
 export default surveyRoute
 
 

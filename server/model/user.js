@@ -1,19 +1,7 @@
-// import mongoose from "mongoose";
-// const { model, models, Schema } = mongoose;
 
 import mongoose from "mongoose";
 const {model,models,Schema} = mongoose
 
-// const UserSchema = new Schema({
-//   email:String,
-//   password:String,
-  
-  
-//   date: {
-//     type: Date,
-//     default: Date.now,
-//   },
-// });
 
 const UserSchema = new Schema({
   email:String,

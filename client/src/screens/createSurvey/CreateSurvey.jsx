@@ -83,6 +83,18 @@ const CreateSurvey = () => {
   const removeQuestion = (indexToRemove) => {
     setQuestions(questions.filter((_, index) => index !== indexToRemove));
   };
+  // const removeOption = (indexToRemove) => {
+  //   setQuestions(
+  //     questions.options.filter((_, index) => index !== indexToRemove)
+  //   );
+  // };
+  const removeOption = (questionIndex, optionIndex) => {
+    const newQuestions = questions.slice();
+    newQuestions[questionIndex].options = newQuestions[
+      questionIndex
+    ].options.filter((_, index) => index !== optionIndex);
+    setQuestions(newQuestions);
+  };
 
   const handleQuestionChange = (index, event) => {
     const newQuestions = questions.slice();
@@ -274,7 +286,6 @@ const CreateSurvey = () => {
                 style={{
                   marginBottom: "11px",
                   padding: "5px 6px",
-                  border: "1px solid rgba(0,0,0,0.2)",
                 }}
               >
                 <span
@@ -311,16 +322,29 @@ const CreateSurvey = () => {
                 </select>
                 {question.questionType === "multiple choice" &&
                   question.options.map((option, optionIndex) => (
-                    <input
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
                       key={optionIndex}
-                      type="text"
-                      placeholder={`Option ${optionIndex + 1}`}
-                      value={option}
-                      onChange={(e) =>
-                        handleOptionChange(index, optionIndex, e)
-                      }
-                    />
+                    >
+                      <input
+                        type="text"
+                        placeholder={`Option ${optionIndex + 1}`}
+                        value={option}
+                        onChange={(e) =>
+                          handleOptionChange(index, optionIndex, e)
+                        }
+                      />
+                      <FaXmark
+                        className="questionXmark"
+                        onClick={() => removeOption(index, optionIndex)}
+                      />
+                    </div>
                   ))}
+
                 {question.questionType === "multiple choice" && (
                   <button
                     type="button"
@@ -332,16 +356,29 @@ const CreateSurvey = () => {
                 )}
                 {question.questionType === "single choice" &&
                   question.options.map((option, optionIndex) => (
-                    <input
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
                       key={optionIndex}
-                      type="text"
-                      placeholder={`Option ${optionIndex + 1}`}
-                      value={option}
-                      onChange={(e) =>
-                        handleOptionChange(index, optionIndex, e)
-                      }
-                    />
+                    >
+                      <input
+                        type="text"
+                        placeholder={`Option ${optionIndex + 1}`}
+                        value={option}
+                        onChange={(e) =>
+                          handleOptionChange(index, optionIndex, e)
+                        }
+                      />
+                      <FaXmark
+                        className="questionXmark"
+                        onClick={() => removeOption(index, optionIndex)}
+                      />
+                    </div>
                   ))}
+
                 {question.questionType === "single choice" && (
                   <button
                     type="button"

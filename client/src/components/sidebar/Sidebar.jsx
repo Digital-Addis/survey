@@ -13,7 +13,7 @@ import { MdSystemUpdateAlt } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import "./Sidebar.scss";
 import { SidebarContext } from "../../context/SidebarContext";
-
+import { MdOutlineQuestionAnswer } from "react-icons/md";
 import Avatar from "@mui/material/Avatar";
 const Sidebar = () => {
   // const { theme } = useContext(ThemeContext);
@@ -88,6 +88,14 @@ const Sidebar = () => {
                   <MdSystemUpdateAlt size={20} />
                 </span>
                 <span className="menu-link-text">Update Survey</span>
+              </NavLink>
+            </li>
+            <li className="menu-item">
+              <NavLink to="/dashbboard-responses" className="menu-link ">
+                <span className="menu-link-icon">
+                  <MdOutlineQuestionAnswer size={20} />
+                </span>
+                <span className="menu-link-text">Response</span>
               </NavLink>
             </li>
             <li className="menu-item">

@@ -310,3 +310,39 @@ export async function getDeletedSurvey (req, res){
         res.status(400).json({error:error.message})
     }
 }
+
+export async function getDeletedSurveysNumber (req,res){
+    try {
+        const survey = await TrashModel.find()
+        if(!survey){
+            return res.status(404).json({error:'deleted survey number is not found'})
+        }
+        res.status(200).json(survey.length)
+
+    } catch (error) {
+        res.status(400).json({error:error.message})
+    }
+}
+
+export async function submitSurvey(req,res){
+    const { uniqueId } = req.params;
+    const { responses } = req.body;
+  
+    try {
+      const survey = await SurveyModel.findOne({ _id: uniqueId });
+      if (!survey) {
+        return res.status(404).send("Survey not found");
+      }
+  
+      survey.responses.push(responses);
+      await survey.save();
+  
+      res.status(200).send("Survey responses submitted successfully");
+    } catch (error) {
+      console.error("Error submitting survey responses", error);
+      res.status(500).send("Error submitting survey responses");
+    }
+
+}
+
+

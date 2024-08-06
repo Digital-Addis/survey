@@ -114,12 +114,16 @@ body, h1, h2, h3, h4, h5, h6, p, ul, li, form, input, textarea, select, button {
 
 .questionXmark{
   font-weight: 500;
-  font-size: 18px;
+  font-size: 15px;
+  margin-left: 3px;
+  background-color: aliceblue;
   transition: 300ms all;
 
 }
 .questionXmark:hover{
   cursor: pointer;
   scale: 1.02;
+  font-size: 18px;
+  padding: 2px 4px;
   color: red;
 }
