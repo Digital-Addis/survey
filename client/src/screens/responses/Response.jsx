@@ -152,8 +152,8 @@ export default function Response() {
   const COLORS = [
     "rgba(255, 0, 0,0.7)",
     "rgba(0, 0, 255,0.7)",
+    "#6AB187",
     "#FFBB28",
-    "#FF8042",
     "#FF6384",
     "#36A2EB",
   ];
@@ -252,11 +252,16 @@ export default function Response() {
               }}
             >
               <CartesianGrid stroke="#f5f5f5" />
-              <XAxis dataKey="name" />
+              <XAxis
+                dataKey="name"
+                interval={0}
+                axisLine={true}
+                style={{ width: "100%" }}
+              />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="value" fill="	#1ebbd7" barSize={70} />
+              <Bar dataKey="value" fill="#6AB187" barSize={50} />
             </ComposedChart>
           </ResponsiveContainer>
         </div>

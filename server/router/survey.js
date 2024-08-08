@@ -34,6 +34,7 @@ surveyRoute.route("/deleted-survey-number").get(surveyController.getDeletedSurve
 
 surveyRoute.route("/submit/:uniqueId").post(surveyController.submitSurvey)  
 surveyRoute.route("/generate-question").post(surveyController.geminiAI)
+surveyRoute.route("/prize").post(surveyController.sendPhoneNumber)
 export default surveyRoute
 
 

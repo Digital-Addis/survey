@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -11,72 +11,39 @@ import {
 import { ThemeContext } from "../../../context/ThemeContext";
 import { LIGHT_THEME } from "../../../constants/themeConstants";
 import "./AreaCharts.scss";
-
-const data = [
-  {
-    month: "Jan",
-    negative: 0,
-    positive: 5,
-  },
-  {
-    month: "Feb",
-    negative: 5,
-    positive: 5,
-  },
-  {
-    month: "Mar",
-    negative: 5,
-    positive: 90,
-  },
-  {
-    month: "April",
-    negative: 90,
-    positive: 20,
-  },
-  {
-    month: "May",
-    negative: 55,
-    positive: 10,
-  },
-  {
-    month: "Jun",
-    negative: 30,
-    positive: 30,
-  },
-  {
-    month: "Jul",
-    negative: 32,
-    positive: 13,
-  },
-  {
-    month: "Aug",
-    negative: 62,
-    positive: 22,
-  },
-  {
-    month: "Sep",
-    negative: 55,
-    positive: 20,
-  },
-  {
-    month: "Oct",
-    negative: 55,
-    positive: 8,
-  },
-  {
-    month: "Nov",
-    negative: 55,
-    positive: 2,
-  },
-  {
-    month: "Dec",
-    negative: 55,
-    positive: 10,
-  },
-];
+import axios from "axios";
 
 const AreaBarChart = () => {
+  const [surveyData, setSurveyData] = useState([]);
   const { theme } = useContext(ThemeContext);
+  const [totalSurvey, setTotalSurvey] = useState();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/survey/get-total-surveys")
+      .then((response) => {
+        setTotalSurvey(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the surveys!", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/survey/get-surveys")
+      .then((res) => {
+        const formattedData = res.data.map((survey) => ({
+          title: survey.title,
+          Questions: survey.questions.length,
+          Responses: survey.responses.length,
+        }));
+        setSurveyData(formattedData);
+      })
+      .catch((err) => {
+        console.error("There was an error fetching the survey data", err);
+      });
+  }, []);
 
   const formatTooltipValue = (value) => {
     return `${value}`;
@@ -93,13 +60,10 @@ const AreaBarChart = () => {
   return (
     <div className="bar-chart">
       <div className="bar-chart-info">
-        <h5 className="bar-chart-title">Total Survey</h5>
+        <h5 className="bar-chart-title">Total Survey Data</h5>
         <div className="chart-info-data">
-          <div className="info-data-value">80</div>
-          <div className="info-data-text">
-            {/* <FaArrowUpLong />
-            <p>5% than last month.</p> */}
-          </div>
+          <div className="info-data-value">{totalSurvey}</div>
+          <div className="info-data-text"></div>
         </div>
       </div>
       <div className="bar-chart-wrapper">
@@ -107,30 +71,31 @@ const AreaBarChart = () => {
           <BarChart
             width={500}
             height={200}
-            data={data}
+            data={surveyData}
             margin={{
-              top: 5,
+              top: 0,
               right: 5,
               left: 0,
-              bottom: 5,
+              bottom: 25,
             }}
           >
             <XAxis
-              padding={{ left: 10 }}
-              dataKey="month"
-              tickSize={0}
-              axisLine={false}
+              dataKey="title"
+              // tickSize={0}
+              interval={0}
+              axisLine={true}
               tick={{
                 fill: `${theme === LIGHT_THEME ? "#676767" : "#000000"}`,
                 fontSize: 14,
               }}
+              style={{ width: "100%" }}
             />
             <YAxis
               padding={{ bottom: 10, top: 10 }}
               tickFormatter={formatYAxisLabel}
-              tickCount={6}
-              axisLine={false}
-              tickSize={0}
+              // tickCount={6}
+              axisLine={true}
+              // tickSize={0}
               tick={{
                 fill: `${theme === LIGHT_THEME ? "#676767" : "#000000"}`,
               }}
@@ -147,17 +112,15 @@ const AreaBarChart = () => {
               formatter={formatLegendValue}
             />
             <Bar
-              dataKey="positive"
+              dataKey="Responses"
               fill="#475be8"
-              activeBar={false}
               isAnimationActive={false}
-              barSize={24}
+              barSize={29}
               radius={[4, 4, 4, 4]}
             />
             <Bar
-              dataKey="negative"
-              fill="#e3e7fc"
-              activeBar={false}
+              dataKey="Questions"
+              fill="#6AB187"
               isAnimationActive={false}
               barSize={24}
               radius={[4, 4, 4, 4]}

@@ -8,11 +8,11 @@ const AreaCard = ({ colors, percentFillValue, cardInfo }) => {
 
   const data = [
     { name: "Remained", value: remainedValue },
-    { name: "Achieved Sales", value: filledValue },
+    { name: "Achieved ", value: filledValue },
   ];
 
   const renderTooltipContent = (value) => {
-    return `${(value / 360) * 100} %`;
+    return `${(value / 360) * 100} `;
   };
 
   return (

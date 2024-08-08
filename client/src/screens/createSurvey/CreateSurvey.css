@@ -160,11 +160,13 @@ body, h1, h2, h3, h4, h5, h6, p, ul, li, form, input, textarea, select, button {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.aiResponseContainer p{
+.user-prompt{
   font-size: 14px;
   gap: 2px;
   text-align: justify;
   /* letter-spacing: 0.5px; */
+  display: flex;
+  /* align-items: center; */
   line-height: 21.5px;
 }
 

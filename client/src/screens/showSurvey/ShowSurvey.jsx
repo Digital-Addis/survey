@@ -39,9 +39,9 @@ const ShowSurvey = () => {
   const [survey, setSurvey] = useState(null);
   const [loading, setLoading] = useState(true);
   const [responses, setResponses] = useState({});
-
+  const [phonenumber, setPhoneNumber] = useState("");
   const [openSuccess, setOpenSuccess] = useState(false);
-
+  const surveyid = uniqueId;
   const handleClickOpenSuccess = () => {
     setOpenSuccess(true);
   };
@@ -107,6 +107,21 @@ const ShowSurvey = () => {
     } catch (error) {
       console.error("Failed to submit survey", error);
       toast.error("Failed to submit survey");
+    }
+  };
+  const handleSubmitPhoneNumber = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(`http://localhost:8080/api/survey/prize`, {
+        phonenumber,
+        surveyid,
+      });
+      toast.success("Phone number sent successfully.");
+      handleCloseSuccess();
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to send phone number", error);
+      toast.error("Failed to send phone number");
     }
   };
 
@@ -247,12 +262,16 @@ const ShowSurvey = () => {
                 textAlign: "center",
               }}
             >
-              <form>
+              <form onSubmit={handleSubmitPhoneNumber}>
                 <input
                   type="text"
                   placeholder="+251 91 8234567"
                   required
+                  value={phonenumber}
+                  name="phoneNumber"
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                 ></input>
+                <input type="hidden" value={surveyid} name="surveyid"></input>
                 <button type="submit">Send</button>
               </form>
             </DialogContentText>

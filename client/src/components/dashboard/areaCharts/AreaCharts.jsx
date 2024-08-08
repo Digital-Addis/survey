@@ -1,13 +1,13 @@
-import AreaBarChart from "./AreaBarChart"
-import AreaProgressChart from "./AreaProgressChart"
+import AreaBarChart from "./AreaBarChart";
+import AreaProgressChart from "./AreaProgressChart";
 
 const AreaCharts = () => {
   return (
     <section className="content-area-charts">
       <AreaBarChart />
-      <AreaProgressChart />
+      {/* <AreaProgressChart /> */}
     </section>
-  )
-}
+  );
+};
 
-export default AreaCharts
+export default AreaCharts;

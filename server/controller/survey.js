@@ -1,6 +1,7 @@
 // import { SurveyModel } from '../model/survey.js';
 import {SurveyModel} from '../model/survey.js'
 import {TrashModel} from '../model/trash.js'
+import { PrizeModel } from '../model/prize.js'
 // import { v4 as uuidv4 } from 'uuid';
 import {v4 as uuidv4} from 'uuid'
 import dotenv from 'dotenv'
@@ -369,7 +370,7 @@ export async function geminiAI(req, res) {
       });
   
       // Generate response
-      const result = await chat.sendMessage([prompt]);
+        const result = await chat.sendMessage([prompt]);
       const text = await result.response.text();
   
       // Send response
@@ -380,3 +381,14 @@ export async function geminiAI(req, res) {
     }
   }
   
+  export async function sendPhoneNumber(req, res) {
+    const {phonenumber,surveyid} = req.body;
+   
+    try {
+    const newPrize = new PrizeModel({phonenumber,surveyid});
+         await newPrize.save()
+        res.status(201).json({message:"Phone number sent successfully"})
+    } catch (error) {
+        res.status(500).json({error:'failed to send phone number'})
+    }
+}

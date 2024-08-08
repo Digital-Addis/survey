@@ -54,6 +54,7 @@ const CreateSurvey = () => {
   const [prompt, setPrompt] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [loading, setLoading] = useState(false);
+  const responseEndRef = useRef(null);
 
   const makeRequestAPI = async (prompt) => {
     setLoading(true);
@@ -65,14 +66,11 @@ const CreateSurvey = () => {
         }
       );
 
-      const response = res.data; // Assuming the API response is in res.data
+      const response = res.data;
 
-      setChatHistory([
-        ...chatHistory,
-        { prompt: prompt, response: response }, // Add both prompt and response to chat history
-      ]);
+      setChatHistory([...chatHistory, { prompt: prompt, response: response }]);
 
-      setPrompt(""); // Clear prompt after adding to chat history
+      setPrompt("");
     } catch (error) {
       console.error("Error generating question:", error);
       toast.error("Failed to generate question, please try again.");
@@ -103,6 +101,11 @@ const CreateSurvey = () => {
   useEffect(() => {
     setChatHistory([]);
   }, []);
+  useEffect(() => {
+    if (responseEndRef.current) {
+      responseEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [chatHistory, loading]);
 
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const titleShare =
@@ -470,12 +473,14 @@ const CreateSurvey = () => {
                   <p
                     style={{
                       textAlign: "center",
-                      fontSize: "17px",
+                      fontSize: "15px",
                       marginTop: "6px",
                     }}
                   >
-                    Enter type of question you want and let's our AI prepare
-                    your question for you.
+                    Specify type of question you want and number of question you
+                    want!
+                    {/* Enter type of question you want and let's our AI prepare
+                    your question for you. */}
                   </p>
                 </header>
                 <textarea
@@ -488,56 +493,32 @@ const CreateSurvey = () => {
                   onKeyPress={handleKeyPress}
                 />
                 <button type="submit" onClick={submitHandler}>
-                  Generate
+                  {loading ? "Generating..." : "Generate"}
                 </button>
               </form>
-              {loading && (
-                <div>
-                  {/* <Box sx={{ width: 300 }}>
-      <Skeleton animation="wave"
-                    width="100%" />
-      <Skeleton animation="wave" 
-                    width="100%"/>
-      <Skeleton animation="wave" 
-                    width="100%"/>
-    </Box> */}
-                  <Skeleton
-                    animation="wave"
-                    width="100%"
-                    height={20}
-                    // style={{ marginTop: "10px" }}
-                  />{" "}
-                  <Skeleton
-                    animation="wave"
-                    width="100%"
-                    height={20}
-                    // style={{ marginTop: "10px" }}
-                  />{" "}
-                  <Skeleton
-                    animation="wave"
-                    width="100%"
-                    height={20}
-                    // style={{ marginTop: "10px" }}
-                  />
-                  <Skeleton animation="wave" width="100%" height={20} />
-                  <Skeleton animation="wave" width="100%" height={20} />
-                </div>
-              )}
               {chatHistory.map((chat, index) => (
                 <div className="aiResponseContainer" key={index}>
-                  <p
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      fontSize: "15px",
-                    }}
-                  >
-                    <b>{chat.prompt}</b>
-                  </p>
+                  <div className="user-prompt">
+                    <strong>User:</strong> {chat.prompt}
+                  </div>
                   <br />
-                  <p>{chat.response}</p>
+                  <div className="user-prompt">
+                    <strong>AI:</strong> {chat.response}
+                  </div>
                 </div>
               ))}
+              {loading && (
+                <div style={{ padding: "6px 12px" }}>
+                  <Box>
+                    <Skeleton animation="wave" width="100%" height={20} />{" "}
+                    <Skeleton animation="wave" width="100%" height={20} />{" "}
+                    <Skeleton animation="wave" width="100%" height={20} />
+                    <Skeleton animation="wave" width="100%" height={20} />
+                    <Skeleton animation="wave" width="100%" height={20} />
+                  </Box>
+                  <div ref={responseEndRef}></div>
+                </div>
+              )}
             </section>
           </section>
         </div>

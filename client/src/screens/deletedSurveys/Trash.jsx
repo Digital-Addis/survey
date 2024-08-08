@@ -108,10 +108,10 @@ export default function Trash() {
                 columns={columns}
                 initialState={{
                   pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
+                    paginationModel: { page: 0, pageSize: 10 },
                   },
                 }}
-                pageSizeOptions={[5, 10, 15]}
+                pageSizeOptions={[10, 20]}
                 checkboxSelection
               />
             </div>
