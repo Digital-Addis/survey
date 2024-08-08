@@ -1,10 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./ShowSurvey.css";
 import FadeLoader from "react-spinners/FadeLoader";
 import { ToastContainer, toast } from "react-toastify";
 
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+
+import Lottie from "react-lottie";
+import animationData from "../../assests/Animation.json";
+import { HiMiniXMark } from "react-icons/hi2";
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: animationData,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
 const override = {
   display: "block",
   margin: "0 auto",
@@ -16,6 +39,17 @@ const ShowSurvey = () => {
   const [survey, setSurvey] = useState(null);
   const [loading, setLoading] = useState(true);
   const [responses, setResponses] = useState({});
+
+  const [openSuccess, setOpenSuccess] = useState(false);
+
+  const handleClickOpenSuccess = () => {
+    setOpenSuccess(true);
+  };
+
+  const handleCloseSuccess = () => {
+    setOpenSuccess(false);
+    setResponses("");
+  };
 
   useEffect(() => {
     const fetchSurvey = async () => {
@@ -67,9 +101,9 @@ const ShowSurvey = () => {
       await axios.post(`http://localhost:8080/api/survey/submit/${uniqueId}`, {
         responses,
       });
-      toast.success("Survey submitted successfully!");
       setResponses("");
-      window.location.reload();
+      // window.location.reload();
+      handleClickOpenSuccess(true);
     } catch (error) {
       console.error("Failed to submit survey", error);
       toast.error("Failed to submit survey");
@@ -162,6 +196,68 @@ const ShowSurvey = () => {
           </section>
           <button type="submit">Submit</button>
         </form>
+        <Dialog
+          open={openSuccess}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleCloseSuccess}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogActions>
+            <Button onClick={handleCloseSuccess}>
+              <HiMiniXMark
+                style={{
+                  fontSize: "22px",
+                }}
+              />
+            </Button>
+          </DialogActions>
+          <Lottie options={defaultOptions} height={70} width={300} />
+
+          <DialogTitle
+            style={{
+              fontSize: "46px",
+              width: "80%",
+              margin: "auto",
+              textAlign: "center",
+              color: "#14ac5f",
+              fontWeight: "bolder",
+              padding: "0px",
+            }}
+          >
+            Sent Successully
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText
+              id="alert-dialog-slide-description"
+              style={{
+                width: "80%",
+                margin: "auto",
+                textAlign: "center",
+              }}
+            >
+              To get the prize of 100birr mobile card, please fill your phone
+              number below.
+            </DialogContentText>
+            <DialogContentText
+              id="alert-dialog-slide-description"
+              style={{
+                width: "80%",
+                margin: "auto",
+                textAlign: "center",
+              }}
+            >
+              <form>
+                <input
+                  type="text"
+                  placeholder="+251 91 8234567"
+                  required
+                ></input>
+                <button type="submit">Send</button>
+              </form>
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

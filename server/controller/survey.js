@@ -3,8 +3,9 @@ import {SurveyModel} from '../model/survey.js'
 import {TrashModel} from '../model/trash.js'
 // import { v4 as uuidv4 } from 'uuid';
 import {v4 as uuidv4} from 'uuid'
-
-
+import dotenv from 'dotenv'
+dotenv.config()
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // export async function createSurvey(req, res) {
 //   const { title, description, questions, userId } = req.body;
@@ -346,3 +347,36 @@ export async function submitSurvey(req,res){
 }
 
 
+export async function geminiAI(req, res) {
+    try {
+      const { prompt } = req.body;
+  
+      // Input validation
+      if (!prompt || typeof prompt !== "string") {
+        return res.status(400).send("Invalid prompt");
+      }
+  
+      // Initialize Generative AI model
+      const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  
+      // Start chat with the model
+      const chat = model.startChat({
+        history: [],
+        generationConfig: {
+          maxOutputTokens: 500,
+        },
+      });
+  
+      // Generate response
+      const result = await chat.sendMessage([prompt]);
+      const text = await result.response.text();
+  
+      // Send response
+      res.send(text);
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).send("Failed to generate content");
+    }
+  }
+  

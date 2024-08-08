@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "./CreateSurvey.css";
 import { toast } from "react-toastify";
@@ -6,7 +6,6 @@ import { AreaTop } from "../../components";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -19,6 +18,8 @@ import { HiMiniXMark } from "react-icons/hi2";
 import Lottie from "react-lottie";
 import { FaCopy } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import Skeleton from "@mui/material/Skeleton";
+import Box from "@mui/material/Box";
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -34,6 +35,7 @@ import {
   XIcon,
 } from "react-share";
 import { FaXmark } from "react-icons/fa6";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
@@ -48,6 +50,60 @@ const defaultOptions = {
 };
 
 const CreateSurvey = () => {
+  const inputRef = useRef(null);
+  const [prompt, setPrompt] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const makeRequestAPI = async (prompt) => {
+    setLoading(true);
+    try {
+      const res = await axios.post(
+        "http://localhost:8080/api/survey/generate-question",
+        {
+          prompt,
+        }
+      );
+
+      const response = res.data; // Assuming the API response is in res.data
+
+      setChatHistory([
+        ...chatHistory,
+        { prompt: prompt, response: response }, // Add both prompt and response to chat history
+      ]);
+
+      setPrompt(""); // Clear prompt after adding to chat history
+    } catch (error) {
+      console.error("Error generating question:", error);
+      toast.error("Failed to generate question, please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const submitHandler = async (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    if (prompt.trim() === "") {
+      toast.error("Prompt cannot be empty");
+      return;
+    }
+    await makeRequestAPI(prompt);
+    inputRef.current.blur();
+  };
+
+  const handleKeyPress = async (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      await submitHandler();
+    }
+  };
+
+  useEffect(() => {
+    setChatHistory([]);
+  }, []);
+
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const titleShare =
     typeof document !== "undefined"
@@ -83,11 +139,7 @@ const CreateSurvey = () => {
   const removeQuestion = (indexToRemove) => {
     setQuestions(questions.filter((_, index) => index !== indexToRemove));
   };
-  // const removeOption = (indexToRemove) => {
-  //   setQuestions(
-  //     questions.options.filter((_, index) => index !== indexToRemove)
-  //   );
-  // };
+
   const removeOption = (questionIndex, optionIndex) => {
     const newQuestions = questions.slice();
     newQuestions[questionIndex].options = newQuestions[
@@ -145,7 +197,7 @@ const CreateSurvey = () => {
         <Sidebar />
         <AreaTop />
         <ToastContainer />
-        <div className="content-wrapper">
+        <div className="content-wrapper-create-survey">
           <Dialog
             open={openSuccess}
             TransitionComponent={Transition}
@@ -408,6 +460,86 @@ const CreateSurvey = () => {
             </div>
             <button type="submit">Create Survey</button>
           </form>
+          <section className="aiContainer">
+            <section>
+              <form onSubmit={submitHandler}>
+                <header>
+                  <h2 style={{ textAlign: "center" }}>
+                    Generate question with our AI.
+                  </h2>
+                  <p
+                    style={{
+                      textAlign: "center",
+                      fontSize: "17px",
+                      marginTop: "6px",
+                    }}
+                  >
+                    Enter type of question you want and let's our AI prepare
+                    your question for you.
+                  </p>
+                </header>
+                <textarea
+                  type="text"
+                  rows={3}
+                  placeholder="enter your prompt"
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  ref={inputRef}
+                  onKeyPress={handleKeyPress}
+                />
+                <button type="submit" onClick={submitHandler}>
+                  Generate
+                </button>
+              </form>
+              {loading && (
+                <div>
+                  {/* <Box sx={{ width: 300 }}>
+      <Skeleton animation="wave"
+                    width="100%" />
+      <Skeleton animation="wave" 
+                    width="100%"/>
+      <Skeleton animation="wave" 
+                    width="100%"/>
+    </Box> */}
+                  <Skeleton
+                    animation="wave"
+                    width="100%"
+                    height={20}
+                    // style={{ marginTop: "10px" }}
+                  />{" "}
+                  <Skeleton
+                    animation="wave"
+                    width="100%"
+                    height={20}
+                    // style={{ marginTop: "10px" }}
+                  />{" "}
+                  <Skeleton
+                    animation="wave"
+                    width="100%"
+                    height={20}
+                    // style={{ marginTop: "10px" }}
+                  />
+                  <Skeleton animation="wave" width="100%" height={20} />
+                  <Skeleton animation="wave" width="100%" height={20} />
+                </div>
+              )}
+              {chatHistory.map((chat, index) => (
+                <div className="aiResponseContainer" key={index}>
+                  <p
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      fontSize: "15px",
+                    }}
+                  >
+                    <b>{chat.prompt}</b>
+                  </p>
+                  <br />
+                  <p>{chat.response}</p>
+                </div>
+              ))}
+            </section>
+          </section>
         </div>
       </main>
     </>

@@ -33,6 +33,7 @@ surveyRoute.route("/deleted-survey-number").get(surveyController.getDeletedSurve
   // export default surveyRoute;
 
 surveyRoute.route("/submit/:uniqueId").post(surveyController.submitSurvey)  
+surveyRoute.route("/generate-question").post(surveyController.geminiAI)
 export default surveyRoute
 
 

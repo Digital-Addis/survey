@@ -5,7 +5,16 @@ body, h1, h2, h3, h4, h5, h6, p, ul, li, form, input, textarea, select, button {
     box-sizing: border-box;
     font-family: 'Arial', sans-serif;
   }
-  
+  .content-wrapper-create-survey{
+    min-height: 100vh;
+  padding: 50px 58px;
+  margin-left: 260px;
+  background-color:  #fafafa;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  gap: 10px;
+  }
   form {
     width: 100%;
     max-width: 600px;
@@ -127,3 +136,37 @@ body, h1, h2, h3, h4, h5, h6, p, ul, li, form, input, textarea, select, button {
   padding: 2px 4px;
   color: red;
 }
+.aiContainer{
+  flex: 50%;
+  /* width: 100%; */
+  /* max-width: 600px; */
+  margin: 0 auto;
+  padding: 0px;
+  /* border: 1px solid #ddd; */
+  border: 1px 1px 0px 1px solid #ddd;
+  border-radius: 5px;
+  background: #fff;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+.aiResponseContainer{
+  width: 100%;
+  /* max-width: 600px; */
+  margin: 0 auto;
+  padding: 20px;
+  /* border: 1px solid #ddd; */
+  border: 0px 1px 0px 1px solid #ddd;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.aiResponseContainer p{
+  font-size: 14px;
+  gap: 2px;
+  text-align: justify;
+  /* letter-spacing: 0.5px; */
+  line-height: 21.5px;
+}
+
+
+

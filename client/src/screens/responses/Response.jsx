@@ -146,7 +146,7 @@ export default function Response() {
 
   const columns = [
     { field: "id", headerName: "No.", width: 90 },
-    { field: "title", headerName: "Response", width: 160 },
+    { field: "title", headerName: "Response", width: 320 },
   ];
 
   const COLORS = [
@@ -211,7 +211,7 @@ export default function Response() {
 
     if (question.questionType === "single choice") {
       return (
-        <div style={{ width: "80%", margin: "auto" }}>
+        <div style={{ width: "90%", margin: "auto" }}>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
               <Pie
@@ -238,7 +238,7 @@ export default function Response() {
       );
     } else if (question.questionType === "multiple choice") {
       return (
-        <div style={{ width: "80%", margin: "auto" }}>
+        <div style={{ width: "90%", margin: "auto" }}>
           <ResponsiveContainer width="100%" height={300}>
             <ComposedChart
               width={500}
